@@ -1,0 +1,22 @@
+@{
+    // Morphing the shape to keep Model untouched
+    Model.Metadata.Alternates.Clear();
+    Model.Metadata.Type = "MenuItemLink";
+
+    // need to doublecheck this nested menu code + probably need some css for it - haven't really used it in orchard yet
+    bool hasChildren = (bool)Model.HasItems;
+}
+
+<li>
+    @await DisplayAsync(Model)
+        
+    @if (hasChildren)
+    {
+        <ul>
+            @foreach (var item in Model.Items)
+            {
+                @await DisplayAsync(item)
+            }
+        </ul>
+    }
+</li>

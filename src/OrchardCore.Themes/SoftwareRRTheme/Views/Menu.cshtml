@@ -1,0 +1,12 @@
+<nav class="s-header__nav">
+    <ul class="list-group s-header__menu-links">
+        @foreach (var item in Model.Items)
+        {
+            @await DisplayAsync(item)
+        }
+    </ul>
+
+    <div class="s-header__contact">
+        <a href="~/Contact" class="btn btn--primary s-header__contact-btn">Let's Work Together</a>
+    </div>
+</nav>

@@ -54,7 +54,23 @@
         <!-- # site header
         ================================================== -->
         <header class="s-header">
+            <div class="row s-header__inner width-sixteen-col">
+
+                <div class="s-header__block">
+                    <div class="s-header__logo">
+                        <a class="logo" href="index.html">
+                            <img src="~/SoftwareRRTheme/images/logo.svg" alt="Vorda's den">
+                        </a>
+                    </div>
+
+                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                </div> <!-- end s-header__block -->
+                @* TODO: test dynamic cache and revisit this menu cache options *@
+                <menu alias="alias:main-menu" cache-id="main-menu" cache-fixed-duration="00:05:00" cache-tag="alias:main-menu" cache-context="user.roles" />
+            </div> <!-- end s-header__inner -->
+
             @await RenderSectionAsync("Header", required: false)
+
         </header> <!-- end s-header -->
     
         <!-- # site main content

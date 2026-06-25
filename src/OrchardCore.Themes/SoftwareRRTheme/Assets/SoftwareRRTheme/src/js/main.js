@@ -17,7 +17,7 @@
 
             preloader.addEventListener('transitionend', function afterTransition(e) {
                 if (e.target === preloader) {
-                    siteBody.classList.add('ss-show');
+                    siteBody.classList.add('rr-show');
                     preloader.style.display = 'none';
                     preloader.removeEventListener('transitionend', afterTransition);
                 }
