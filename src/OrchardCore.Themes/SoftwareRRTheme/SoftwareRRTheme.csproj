@@ -9,8 +9,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\OrchardCore\OrchardCore.ResourceManagement\OrchardCore.ResourceManagement.csproj" />
     <ProjectReference Include="..\..\OrchardCore\OrchardCore.Theme.Targets\OrchardCore.Theme.Targets.csproj" />
     <ProjectReference Include="..\..\OrchardCore\OrchardCore.DisplayManagement\OrchardCore.DisplayManagement.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\SoftwareRRTheme\dist\assets\" />
+    <Folder Include="Assets\SoftwareRRTheme\src\js\" />
+    <Folder Include="Assets\SoftwareRRTheme\src\css\" />
   </ItemGroup>
 
 </Project>

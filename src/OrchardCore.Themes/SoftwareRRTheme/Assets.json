@@ -1,0 +1,30 @@
+[
+  {
+    "action": "copy",
+    "name": "theme-softwarerr-assets",
+    "source": "Assets/SoftwareRRTheme/dist/assets/**",
+    "dest": "wwwroot/",
+    "tags": [ "theme", "images" ]
+  },
+  {
+    "action": "copy",
+    "name": "theme-softwarerr-assets",
+    "source": "Assets/SoftwareRRTheme/dist/js/*.js",
+    "dest": "wwwroot/js/",
+    "tags": [ "theme", "images" ]
+  },
+  {
+    "action": "min",
+    "name": "theme-softwarerr",
+    "source": "Assets/SoftwareRRTheme/src/css/*.css",
+    "dest": "wwwroot/css/",
+    "tags": [ "theme", "css" ]
+  },
+  {
+    "action": "min",
+    "name": "theme-softwarerr",
+    "source": "Assets/SoftwareRRTheme/src/js/*.js",
+    "dest": "wwwroot/js/",
+    "tags": [ "theme", "js" ]
+  }
+]

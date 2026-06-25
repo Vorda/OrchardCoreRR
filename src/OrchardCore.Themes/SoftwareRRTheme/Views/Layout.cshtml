@@ -2,17 +2,75 @@
 <html lang="@Orchard.CultureName()">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Orchard Core</title>
-</head>
-<body>
-    <h1>@T["SAFE MODE"]</h1>
-    @await RenderSectionAsync("Header", required: false)
-    @await RenderBodyAsync()
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <hr />
-    <footer>
-        @await RenderSectionAsync("Footer", required: false)
-    </footer>
+    <resources type="Meta"/>
+    
+    @* Using PageTitle shape here to respect site settings here for page title format 
+        found orchard tag helpers also so replaced it with a simple shape tag
+        <title>@await DisplayAsync(await New.PageTitle())</title> *@
+    <title><shape type="PageTitle"/></title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <resources type="HeadScript" />
+
+    <style asp-name="SoftwareRRTheme-plugins"></style>
+    <style asp-name="SoftwareRRTheme"></style>
+
+    <script asp-name="SoftwareRRTheme" at="Foot"></script>
+
+    <resources type="HeadLink" />
+    <resources type="Stylesheet" />
+
+    <link rel="icon" type="image/png" href="~/SoftwareRRTheme/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="~/SoftwareRRTheme/favicon.svg" />
+    <link rel="shortcut icon" href="~/SoftwareRRTheme/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/SoftwareRRTheme/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="SoftwareRR" />
+    <link rel="manifest" href="~/SoftwareRRTheme/site.webmanifest" />
+    
+    @await RenderSectionAsync("HeadMeta", required: false)
+</head>
+
+<body id="top" dir="@Orchard.CultureDir()">
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="rr-pagewrap rr-home">
+
+        <!-- # site header
+        ================================================== -->
+        <header class="s-header">
+            @await RenderSectionAsync("Header", required: false)
+        </header> <!-- end s-header -->
+    
+        <!-- # site main content
+        ================================================== -->
+        <section id="content" class="s-content">
+            @await RenderBodyAsync()
+        </section> <!-- end s-content-->
+
+        <!-- # footer
+        ================================================== -->
+        <footer class="s-footer">
+            @await RenderSectionAsync("Footer", required: false)
+        </footer> <!-- end s-footer -->
+
+    </div> <!-- end page-wrap -->
+
+    <resources Type="FootScript" />
 </body>
 </html>
