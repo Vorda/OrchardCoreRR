@@ -1,0 +1,11 @@
+@{
+    var contentItem = Model.ContentItem as ContentItem;
+    string cssClasses = contentItem?.Content?.Row?.CustomCSSclasses?.Text;
+
+    string classes = "row";
+    if (!string.IsNullOrWhiteSpace(cssClasses))
+        classes += " " + cssClasses;
+}
+<div class="@classes">
+    @await DisplayAsync(Model.Content.FlowPart)
+</div>

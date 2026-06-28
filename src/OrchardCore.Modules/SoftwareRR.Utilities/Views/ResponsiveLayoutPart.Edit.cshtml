@@ -1,0 +1,239 @@
+@model SoftwareRR.FlowEnhancements.ViewModels.ResponsiveLayoutPartViewModel
+
+@{
+    var sizeOptions = new[] { "25", "33", "50", "66", "75", "100" };
+    var alignmentOptions = new[] { "Inherit", "Left", "Center", "Right", "Justify" };
+}
+
+
+<style>
+    .rr-bp-select-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .rr-bp-select-group .rr-bp-select {
+            flex: 1 1 auto;
+            min-width: 0; /* prevents select from refusing to shrink below its content width */
+        }
+
+        .rr-bp-select-group .rr-bp-remove {
+            flex: 0 0 auto;
+        }
+
+    .rr-bp-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+        .rr-bp-row .ocat-label {
+            width: 100%;
+            text-align: start;
+            padding-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        .rr-bp-row .ocat-limited {
+            width: 100%;
+            max-width: 100%;
+        }
+</style>
+
+<div class="rr-responsive-editor" data-widget="rr-responsive-editor">
+    <div class="ocat-limited-wrapper rr-bp-row" data-bp="xl">
+        <label asp-for="SizeXl" class="ocat-label">@T["Size (xl)"]</label>
+        <div class="ocat-limited">
+            <select asp-for="SizeXl" class="form-select rr-bp-select">
+                @foreach (var opt in sizeOptions)
+                {
+                    <option value="@opt" selected="@(Model.SizeXl == opt)">@opt%</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="ocat-limited-wrapper rr-bp-row" data-bp="mob" style="display:@(string.IsNullOrEmpty(Model.SizeMob) ? "none" : "flex")">
+        <label class="ocat-label">@T["Size (mob)"]</label>
+        <div class="ocat-limited rr-bp-select-group">
+            <select asp-for="SizeMob" class="form-select rr-bp-select">
+                <option value="" hidden></option>
+                @foreach (var opt in sizeOptions)
+                {
+                    <option value="@opt" selected="@(Model.SizeMob == opt)">@opt%</option>
+                }
+            </select>
+            <button type="button" class="btn btn-sm btn-outline-secondary rr-bp-remove" data-bp="mob">&times;</button>
+        </div>
+    </div>
+
+    <div class="ocat-limited-wrapper rr-bp-row" data-bp="tab" style="display:@(string.IsNullOrEmpty(Model.SizeTab) ? "none" : "flex")">
+        <label class="ocat-label">@T["Size (tab)"]</label>
+        <div class="ocat-limited rr-bp-select-group">
+            <select asp-for="SizeTab" class="form-select rr-bp-select">
+                <option value="" hidden></option>
+                @foreach (var opt in sizeOptions)
+                {
+                    <option value="@opt" selected="@(Model.SizeTab == opt)">@opt%</option>
+                }
+            </select>
+            <button type="button" class="btn btn-sm btn-outline-secondary rr-bp-remove" data-bp="tab">&times;</button>
+        </div>
+    </div>
+
+    <div class="ocat-limited-wrapper rr-bp-row" data-bp="md" style="display:@(string.IsNullOrEmpty(Model.SizeMd) ? "none" : "flex")">
+        <label class="ocat-label">@T["Size (md)"]</label>
+        <div class="ocat-limited rr-bp-select-group">
+            <select asp-for="SizeMd" class="form-select rr-bp-select">
+                <option value="" hidden></option>
+                @foreach (var opt in sizeOptions)
+                {
+                    <option value="@opt" selected="@(Model.SizeMd == opt)">@opt%</option>
+                }
+            </select>
+            <button type="button" class="btn btn-sm btn-outline-secondary rr-bp-remove" data-bp="md">&times;</button>
+        </div>
+    </div>
+
+    <div class="ocat-limited-wrapper rr-bp-row" data-bp="lg" style="display:@(string.IsNullOrEmpty(Model.SizeLg) ? "none" : "flex")">
+        <label class="ocat-label">@T["Size (lg)"]</label>
+        <div class="ocat-limited rr-bp-select-group">
+            <select asp-for="SizeLg" class="form-select rr-bp-select">
+                <option value="" hidden></option>
+                @foreach (var opt in sizeOptions)
+                {
+                    <option value="@opt" selected="@(Model.SizeLg == opt)">@opt%</option>
+                }
+            </select>
+            <button type="button" class="btn btn-sm btn-outline-secondary rr-bp-remove" data-bp="lg">&times;</button>
+        </div>
+    </div>
+
+    <div class="ocat-end-offset rr-bp-add-wrapper">
+        <select class="form-select rr-bp-add-select">
+            <option value="">@T["+ Add breakpoint"]</option>
+            <option value="mob">mob</option>
+            <option value="tab">tab</option>
+            <option value="md">md</option>
+            <option value="lg">lg</option>
+        </select>
+    </div>
+
+    <div class="ocat-limited-wrapper">
+        <label asp-for="Alignment" class="ocat-label">@T["Alignment"]</label>
+        <div class="ocat-end">
+            <select asp-for="Alignment" class="form-select rr-align-select">
+                @foreach (var opt in alignmentOptions)
+                {
+                    <option value="@opt" selected="@(Model.Alignment == opt)">@opt</option>
+                }
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<script at="Foot">
+    (function () {
+        document.querySelectorAll('[data-widget="rr-responsive-editor"]').forEach(function (root) {
+            var addSelect = root.querySelector('.rr-bp-add-select');
+            var removeButtons = root.querySelectorAll('.rr-bp-remove');
+
+            function refreshAddOptions() {
+                var used = Array.from(root.querySelectorAll('.rr-bp-row'))
+                    .filter(function (row) { return row.style.display !== 'none' && row.dataset.bp !== 'xl'; })
+                    .map(function (row) { return row.dataset.bp; });
+
+                Array.from(addSelect.options).forEach(function (opt) {
+                    if (!opt.value) return;
+                    opt.hidden = used.indexOf(opt.value) !== -1;
+                });
+            }
+
+            addSelect.addEventListener('change', function () {
+                var bp = addSelect.value;
+                if (!bp) 
+                    return;
+
+                var row = root.querySelector('.rr-bp-row[data-bp="' + bp + '"]');
+                if (row) {
+                    row.style.display = 'flex';
+                    updateEditorClass(root);
+                }
+                addSelect.value = '';
+                refreshAddOptions();
+            });
+
+            root.addEventListener('click', function (e) {
+                if (!e.target.classList.contains('rr-bp-remove')) return;
+
+                var bp = e.target.dataset.bp;
+                var row = root.querySelector('.rr-bp-row[data-bp="' + bp + '"]');
+                if (row) {
+                    var select = row.querySelector('select');
+                    if (select) select.value = '';
+                    row.style.display = 'none';
+                }
+                refreshAddOptions();
+            });
+
+            refreshAddOptions();
+        });
+        
+        function updateEditorClass(root) {
+            var tmpl = root.closest('.widget-template');
+            if (!tmpl)
+                return;
+
+            var preferenceOrder = ['xl', 'lg', 'md', 'tab', 'mob'];
+            var bootstrapTier = { 'xl': 'xl', 'lg': 'lg', 'md': 'md', 'tab': 'sm', 'mob': 'xs' };
+            
+            var sizeToUse = null;
+            var tierToUse = null;
+
+            preferenceOrder.forEach(function (bp) {
+                if (sizeToUse)
+                    return;
+
+                var row = root.querySelector('.rr-bp-row[data-bp="' + bp + '"]');
+                if (row && row.style.display !== 'none') {
+                    var select = row.querySelector('select.rr-bp-select');
+                    if (select && select.value) {
+                        sizeToUse = select.value;
+                        tierToUse = bootstrapTier[bp];
+                    }
+                }
+            });
+
+            if (!sizeToUse) return;
+            
+            // Remove any previous col-{tier}-* class
+            var tiers = ['xs', 'sm', 'md', 'lg', 'xl'];
+            tmpl.className = tmpl.className
+                .split(' ')
+                .filter(function (item) {
+                    return !tiers.some(function (t) { return item.indexOf('col-' + t + '-') === 0; });
+                })
+                .join(' ');
+                
+            var colSize = Math.round(sizeToUse / 100 * 12);
+            tmpl.classList.add('col-' + tierToUse + '-' + colSize);
+        }
+
+        document.querySelectorAll('[data-widget="rr-responsive-editor"]').forEach(function (root) {
+            
+            root.querySelector('select.rr-align-select').addEventListener('change', function() {
+                document.dispatchEvent(new Event('contentpreview:render'));
+            });
+
+            root.querySelectorAll('select.rr-bp-select').forEach(function (select) {
+                select.addEventListener('change', function () {
+                    updateEditorClass(root);
+                    document.dispatchEvent(new Event('contentpreview:render'));
+                });
+            });
+            
+            updateEditorClass(root); // initial state on load
+        });
+    })();
+</script>

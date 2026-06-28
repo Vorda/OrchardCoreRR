@@ -1,0 +1,32 @@
+@using OrchardCore.ContentManagement
+@using SoftwareRR.FlowEnhancements
+@using SoftwareRR.FlowEnhancements.Models
+
+
+@{
+    var ci = (ContentItem)Model.ContentItem;
+    ResponsiveLayoutPart layout = null;
+    ci.TryGet<ResponsiveLayoutPart>(out layout);
+    var classes = new List<string> { "rr-content-block", "column" };
+
+    if (layout != null)
+    {
+        if (!string.IsNullOrEmpty(layout.SizeMob))
+            classes.Add(FlowCssHelper.GetGridClass(eGridSize.mob, layout.SizeMob));
+        if (!string.IsNullOrEmpty(layout.SizeTab))
+            classes.Add(FlowCssHelper.GetGridClass(eGridSize.tab, layout.SizeTab));
+        if (!string.IsNullOrEmpty(layout.SizeMd))
+            classes.Add(FlowCssHelper.GetGridClass(eGridSize.md, layout.SizeMd));
+        if (!string.IsNullOrEmpty(layout.SizeLg))
+            classes.Add(FlowCssHelper.GetGridClass(eGridSize.lg, layout.SizeLg));
+        if (!string.IsNullOrEmpty(layout.SizeXl))
+            classes.Add(FlowCssHelper.GetGridClass(eGridSize.xl, layout.SizeXl));
+
+        if (!string.IsNullOrEmpty(layout.Alignment) && layout.Alignment != "Inherit")
+            classes.Add($"text-{layout.Alignment.ToLower()}");
+    }
+}
+
+<div class="@string.Join(" ", classes)">
+    @await DisplayAsync(Model.Content.FlowPart)
+</div>

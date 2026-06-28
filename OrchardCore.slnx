@@ -114,6 +114,7 @@
     <Project Path="src/OrchardCore.Modules/OrchardCore.Title/OrchardCore.Title.csproj" />
     <Project Path="src/OrchardCore.Modules/OrchardCore.Widgets/OrchardCore.Widgets.csproj" />
     <Project Path="src/OrchardCore.Modules/OrchardCore.XmlRpc/OrchardCore.XmlRpc.csproj" />
+    <Project Path="src/OrchardCore.Modules/SoftwareRR.Utilities/SoftwareRR.Utilities.csproj" />
   </Folder>
   <Folder Name="/src/OrchardCore.Modules/">
     <Project Path="src/OrchardCore.Modules/OrchardCore.Admin/OrchardCore.Admin.csproj" />
